@@ -10,39 +10,47 @@ class BookController extends Controller
     public function showBooks() {
         $books = Book::all();
 
-        return response($this->getFormattedResponse('Books retrieved successfully', $books));
+        return response()->json([
+            'message' => 'Books retrieved successfully.',
+            'results' => $books
+        ])->setEncodingOptions(JSON_UNESCAPED_UNICODE);
     }
 
     public function showBook(int $id) {
         $book = Book::find($id);
 
-        return response($this->getFormattedResponse('Book retrieved successfully', $book));
+        return response()->json([
+            'message' => 'Book retrieved successfully.',
+            'results' => $book
+        ])->setEncodingOptions(JSON_UNESCAPED_UNICODE);
     }
 
     public function createBook(Request $request) {
         $book = Book::create($request->all());
 
-        return response($this->getFormattedResponse('Book created successfully', $book));
+        return response()->json([
+            'message' => 'Book created successfully.',
+            'results' => $book
+        ])->setEncodingOptions(JSON_UNESCAPED_UNICODE);
     }
 
     public function updateBook(int $id, Request $request) {
         $book = Book::find($id);
         $book->update($request->all());
 
-        return response($this->getFormattedResponse('Book updated successfully', $book));
+        return response()->json([
+            'message' => 'Book updated successfully.',
+            'results' => $book
+        ])->setEncodingOptions(JSON_UNESCAPED_UNICODE);
     }
 
-    public function removeBook(int $id) {
+    public function deleteBook(int $id) {
         $book = Book::find($id);
         $book->delete();
 
-        return response($this->getFormattedResponse('Book deleted successfully', $book));
-    }
-
-    private function getFormattedResponse(string $message, mixed $data): string {
-        return json_encode([
-            'message' => $message,
-            'results' => $data
-        ], JSON_UNESCAPED_UNICODE);
+        return response()->json([
+            'message' => 'Book deleted successfully.',
+            'results' => $book
+        ])->setEncodingOptions(JSON_UNESCAPED_UNICODE);
     }
 }

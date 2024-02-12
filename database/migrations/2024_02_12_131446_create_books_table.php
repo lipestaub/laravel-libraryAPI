@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignId('genre_id')->constrained();
             $table->string('author', 255);
             $table->integer('number_of_pages');
-            $table->timestamp('release_date');
+            $table->date('release_date');
             $table->timestamps();
         });
     }
