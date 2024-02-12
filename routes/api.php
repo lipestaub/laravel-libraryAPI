@@ -1,6 +1,7 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\BookController;
+use App\Http\Controllers\GenreController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +15,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::get('/books', [BookController::class, 'showBooks']);
+Route::get('/book/{id}', [BookController::class, 'showBook']);
+Route::post('/book', [BookController::class, 'createBook']);
+Route::patch('/book/{id}', [BookController::class, 'updateBook']);
+Route::delete('/book/{id}', [BookController::class, 'deleteBook']);
+
+Route::get('/genres', [GenreController::class, 'showGenres']);
+Route::get('/genre/{id}', [GenreController::class, 'showGenre']);
+Route::post('/genre', [GenreController::class, 'createGenre']);
+Route::patch('/genre/{id}', [GenreController::class, 'updateGenre']);
