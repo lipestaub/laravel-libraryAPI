@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateGenreRequest;
+use App\Http\Requests\UpdateGenreRequest;
 use App\Models\Genre;
 use Exception;
-use Illuminate\Http\Request;
 
 class GenreController extends Controller
 {
@@ -15,7 +16,7 @@ class GenreController extends Controller
         catch (Exception $exception) {
             return response()->json([
                 'message' => 'Failed to retrieve genres. Please try again later.'
-            ], 500 );
+            ], 500);
         }
 
         return response()->json([
@@ -48,7 +49,7 @@ class GenreController extends Controller
         ])->setEncodingOptions(JSON_UNESCAPED_UNICODE);
     }
 
-    public function createGenre(Request $request) {
+    public function createGenre(CreateGenreRequest $request) {
         try {
             $genre = Genre::create($request->all());
         }
@@ -64,7 +65,7 @@ class GenreController extends Controller
         ])->setEncodingOptions(JSON_UNESCAPED_UNICODE);
     }
 
-    public function updateGenre($id, Request $request) {
+    public function updateGenre($id, UpdateGenreRequest $request) {
         $id = (int) $id;
 
         if ($id <= 0) {

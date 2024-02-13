@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateBookRequest;
+use App\Http\Requests\FilterBooksRequest;
+use App\Http\Requests\UpdateBookRequest;
 use App\Models\Book;
+use App\Models\Genre;
 use Exception;
-use Illuminate\Http\Request;
 
 class BookController extends Controller
 {
@@ -19,6 +21,45 @@ class BookController extends Controller
             ], 500 );
         }
         
+        return response()->json([
+            'message' => 'Books retrieved successfully.',
+            'results' => $books
+        ])->setEncodingOptions(JSON_UNESCAPED_UNICODE);
+    }
+
+    public function showBooksWithFilter(FilterBooksRequest $request) {
+        $query = Book::query();
+
+        if ($request->has('title')) {
+            $query->where('title', $request->input('title'));
+        }
+
+        if ($request->has('start_date')) {
+            $query->where('release_date', '>=', $request->input('start_date'));
+        }
+
+        if ($request->has('end_date')) {
+            $query->where('release_date', '<=', $request->input('end_date'));
+        }
+
+        if ($request->has('genre')) {
+            $query->where('genre_id', Genre::where('name', $request->input('genre'))->value('id'));
+            $request->offsetUnset('genre');
+        }
+
+        if ($request->has('author')) {
+            $query->where('author', $request->input('author'));
+        }
+
+        try {
+            $books = $query->get();
+        }
+        catch (Exception $exception) {
+            return response()->json([
+                'message' => 'Failed to retrieve books. Please verify the parameters and try again.'
+            ], 500 );
+        }
+
         return response()->json([
             'message' => 'Books retrieved successfully.',
             'results' => $books
@@ -65,7 +106,7 @@ class BookController extends Controller
         ])->setEncodingOptions(JSON_UNESCAPED_UNICODE);
     }
 
-    public function updateBook($id, Request $request) {
+    public function updateBook($id, UpdateBookRequest $request) {
         $id = (int) $id;
 
         if ($id <= 0) {

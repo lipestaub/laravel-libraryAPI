@@ -6,7 +6,7 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class CreateBookRequest extends FormRequest
+class UpdateGenreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,11 +24,7 @@ class CreateBookRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string|max:100',
-            'genre_id' => 'required|integer|exists:genres,id',
-            'author' => 'required|string|max:255',
-            'number_of_pages' => 'required|integer',
-            'release_date' => 'required|date',
+            'name' => 'string|max:100',
         ];
     }
 
