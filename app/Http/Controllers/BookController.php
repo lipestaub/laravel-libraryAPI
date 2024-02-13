@@ -60,6 +60,12 @@ class BookController extends Controller
             ], 500 );
         }
 
+        if (count($books) === 0) {
+            return response()->json([
+                'message' => 'No books found matching the specified criteria.'
+            ])->setEncodingOptions(JSON_UNESCAPED_UNICODE);
+        }
+
         return response()->json([
             'message' => 'Books retrieved successfully.',
             'results' => $books
