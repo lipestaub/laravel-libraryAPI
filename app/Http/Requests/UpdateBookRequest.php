@@ -28,14 +28,14 @@ class UpdateBookRequest extends FormRequest
             'genre_id' => 'integer|exists:genres,id',
             'author' => 'string|max:255',
             'number_of_pages' => 'integer',
-            'release_date' => 'date',
+            'release_date' => 'date'
         ];
     }
 
     protected function failedValidation(Validator $validator)
     {
         throw new HttpResponseException(response()->json([
-            'error' => $validator->errors(),
+            'error' => $validator->errors()
         ], 422));
     }
 }

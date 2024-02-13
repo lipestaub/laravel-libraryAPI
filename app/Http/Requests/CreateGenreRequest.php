@@ -24,14 +24,14 @@ class CreateGenreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:100',
+            'name' => 'required|string|max:100'
         ];
     }
 
     protected function failedValidation(Validator $validator)
     {
         throw new HttpResponseException(response()->json([
-            'error' => $validator->errors(),
+            'error' => $validator->errors()
         ], 422));
     }
 }

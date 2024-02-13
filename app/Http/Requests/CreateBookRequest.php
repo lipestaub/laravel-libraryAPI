@@ -28,14 +28,14 @@ class CreateBookRequest extends FormRequest
             'genre_id' => 'required|integer|exists:genres,id',
             'author' => 'required|string|max:255',
             'number_of_pages' => 'required|integer',
-            'release_date' => 'required|date',
+            'release_date' => 'required|date'
         ];
     }
 
     protected function failedValidation(Validator $validator)
     {
         throw new HttpResponseException(response()->json([
-            'error' => $validator->errors(),
+            'error' => $validator->errors()
         ], 422));
     }
 }

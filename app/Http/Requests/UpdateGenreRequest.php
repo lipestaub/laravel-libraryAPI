@@ -24,14 +24,14 @@ class UpdateGenreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'string|max:100',
+            'name' => 'string|max:100'
         ];
     }
 
     protected function failedValidation(Validator $validator)
     {
         throw new HttpResponseException(response()->json([
-            'error' => $validator->errors(),
+            'error' => $validator->errors()
         ], 422));
     }
 }

@@ -19,13 +19,19 @@ class GenreController extends Controller
             ], 500);
         }
 
+        if (count($genres) === 0) {
+            return response()->json([
+                'message' => 'No genres found.'
+            ])->setEncodingOptions(JSON_UNESCAPED_UNICODE);
+        }
+
         return response()->json([
             'message' => 'Genres retrieved successfully.',
             'results' => $genres
         ])->setEncodingOptions(JSON_UNESCAPED_UNICODE);
     }
 
-    public function showGenre($id) {
+    public function showGenre(int $id) {
         $id = (int) $id;
 
         if ($id <= 0) {
@@ -41,6 +47,12 @@ class GenreController extends Controller
             return response()->json([
                 'message' => 'Genre not found.'
             ], 404);
+        }
+
+        if ($genre === null) {
+            return response()->json([
+                'message' => 'Genre not found.'
+            ])->setEncodingOptions(JSON_UNESCAPED_UNICODE);
         }
 
         return response()->json([
@@ -65,7 +77,7 @@ class GenreController extends Controller
         ])->setEncodingOptions(JSON_UNESCAPED_UNICODE);
     }
 
-    public function updateGenre($id, UpdateGenreRequest $request) {
+    public function updateGenre(int $id, UpdateGenreRequest $request) {
         $id = (int) $id;
 
         if ($id <= 0) {
@@ -74,8 +86,22 @@ class GenreController extends Controller
             ], 400);
         }
 
-        try {      
+        try {
             $genre = Genre::find($id);
+        }
+        catch (Exception $exception) {
+            return response()->json([
+                'message' => 'Genre not found.'
+            ], 404);
+        }
+
+        if ($genre === null) {
+            return response()->json([
+                'message' => 'Genre not found.'
+            ])->setEncodingOptions(JSON_UNESCAPED_UNICODE);
+        }
+
+        try {      
             $genre->update($request->all());
         }
         catch (Exception $exception) {

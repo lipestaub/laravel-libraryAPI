@@ -18,7 +18,13 @@ class BookController extends Controller
         catch (Exception $exception) {
             return response()->json([
                 'message' => 'Failed to retrieve books. Please try again later.'
-            ], 500 );
+            ], 500);
+        }
+
+        if (count($books) === 0) {
+            return response()->json([
+                'message' => 'No books found.'
+            ])->setEncodingOptions(JSON_UNESCAPED_UNICODE);
         }
         
         return response()->json([
@@ -57,7 +63,7 @@ class BookController extends Controller
         catch (Exception $exception) {
             return response()->json([
                 'message' => 'Failed to retrieve books. Please verify the parameters and try again.'
-            ], 500 );
+            ], 500);
         }
 
         if (count($books) === 0) {
@@ -72,7 +78,7 @@ class BookController extends Controller
         ])->setEncodingOptions(JSON_UNESCAPED_UNICODE);
     }
 
-    public function showBook($id) {
+    public function showBook(int $id) {
         $id = (int) $id;
 
         if ($id <= 0) {
@@ -88,6 +94,12 @@ class BookController extends Controller
             return response()->json([
                 'message' => 'Book not found.'
             ], 404);
+        }
+
+        if ($book === null) {
+            return response()->json([
+                'message' => 'Book not found.'
+            ])->setEncodingOptions(JSON_UNESCAPED_UNICODE);
         }
 
         return response()->json([
@@ -112,7 +124,7 @@ class BookController extends Controller
         ])->setEncodingOptions(JSON_UNESCAPED_UNICODE);
     }
 
-    public function updateBook($id, UpdateBookRequest $request) {
+    public function updateBook(int $id, UpdateBookRequest $request) {
         $id = (int) $id;
 
         if ($id <= 0) {
@@ -123,6 +135,20 @@ class BookController extends Controller
 
         try {
             $book = Book::find($id);
+        }
+        catch (Exception $exception) {
+            return response()->json([
+                'message' => 'Book not found.'
+            ], 404);
+        }
+
+        if ($book === null) {
+            return response()->json([
+                'message' => 'Book not found.'
+            ])->setEncodingOptions(JSON_UNESCAPED_UNICODE);
+        }
+
+        try {
             $book->update($request->all());
         }
         catch (Exception $exception) {
@@ -137,9 +163,23 @@ class BookController extends Controller
         ])->setEncodingOptions(JSON_UNESCAPED_UNICODE);
     }
 
-    public function deleteBook($id) {
+    public function deleteBook(int $id) {
         try {
             $book = Book::find($id);
+        }
+        catch (Exception $exception) {
+            return response()->json([
+                'message' => 'Book not found.'
+            ], 404);
+        }
+
+        if ($book === null) {
+            return response()->json([
+                'message' => 'Book not found.'
+            ])->setEncodingOptions(JSON_UNESCAPED_UNICODE);
+        }
+
+        try {
             $book->delete();
         }
         catch (Exception $exception) {
