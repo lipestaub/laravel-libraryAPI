@@ -24,7 +24,13 @@ class UpdateGenreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'string|max:100'
+            'name' => 'string|max:100',
+            '*' => function ($attribute, $value, $fail) {
+                $expectedKeys = ['name'];
+                if (!in_array($attribute, $expectedKeys)) {
+                    $fail("The $attribute field is not allowed.");
+                }
+            }
         ];
     }
 

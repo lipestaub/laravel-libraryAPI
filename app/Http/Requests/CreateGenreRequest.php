@@ -24,7 +24,13 @@ class CreateGenreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:100'
+            'name' => 'required|string|max:100',
+            '*' => function ($attribute, $value, $fail) {
+                $expectedKeys = ['name'];
+                if (!in_array($attribute, $expectedKeys)) {
+                    $fail("The $attribute field is not allowed.");
+                }
+            }
         ];
     }
 

@@ -28,7 +28,13 @@ class UpdateBookRequest extends FormRequest
             'genre_id' => 'integer|exists:genres,id',
             'author' => 'string|max:255',
             'number_of_pages' => 'integer',
-            'release_date' => 'date'
+            'release_date' => 'date',
+            '*' => function ($attribute, $value, $fail) {
+                $expectedKeys = ['title', 'genre_id', 'author', 'number_of_pages', 'release_date'];
+                if (!in_array($attribute, $expectedKeys)) {
+                    $fail("The $attribute field is not allowed.");
+                }
+            }
         ];
     }
 

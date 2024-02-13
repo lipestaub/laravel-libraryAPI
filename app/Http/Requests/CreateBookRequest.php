@@ -28,7 +28,13 @@ class CreateBookRequest extends FormRequest
             'genre_id' => 'required|integer|exists:genres,id',
             'author' => 'required|string|max:255',
             'number_of_pages' => 'required|integer',
-            'release_date' => 'required|date'
+            'release_date' => 'required|date',
+            '*' => function ($attribute, $value, $fail) {
+                $expectedKeys = ['title', 'genre_id', 'author', 'number_of_pages', 'release_date'];
+                if (!in_array($attribute, $expectedKeys)) {
+                    $fail("The $attribute field is not allowed.");
+                }
+            }
         ];
     }
 

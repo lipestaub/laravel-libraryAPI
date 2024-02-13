@@ -28,7 +28,13 @@ class FilterBooksRequest extends FormRequest
             'start_date' => 'date',
             'end_date' => 'date',
             'genre' => 'string|max:100|exists:genres,name',
-            'author' => 'string|max:255|exists:books,author'
+            'author' => 'string|max:255|exists:books,author',
+            '*' => function ($attribute, $value, $fail) {
+                $expectedKeys = ['title', 'start_date', 'end_date', 'genre', 'author'];
+                if (!in_array($attribute, $expectedKeys)) {
+                    $fail("The $attribute field is not allowed.");
+                }
+            }
         ];
     }
 
