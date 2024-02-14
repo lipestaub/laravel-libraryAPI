@@ -11,29 +11,7 @@ use Exception;
 
 class BookController extends Controller
 {
-    public function showBooks() {
-        try {
-            $books = Book::all();
-        }
-        catch (Exception $exception) {
-            return response()->json([
-                'message' => 'Failed to retrieve books. Please try again later.'
-            ], 500);
-        }
-
-        if (count($books) === 0) {
-            return response()->json([
-                'message' => 'No books found.'
-            ])->setEncodingOptions(JSON_UNESCAPED_UNICODE);
-        }
-        
-        return response()->json([
-            'message' => 'Books retrieved successfully.',
-            'results' => $books
-        ])->setEncodingOptions(JSON_UNESCAPED_UNICODE);
-    }
-
-    public function showBooksWithFilter(FilterBooksRequest $request) {
+    public function showBooks(FilterBooksRequest $request) {
         $query = Book::query();
 
         if ($request->has('title')) {

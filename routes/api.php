@@ -16,7 +16,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/books', [BookController::class, 'showBooks']);
-Route::get('/filter-books', [BookController::class, 'showBooksWithFilter']);
 Route::get('/book/{id}', [BookController::class, 'showBook']);
 Route::post('/book', [BookController::class, 'createBook']);
 Route::patch('/book/{id}', [BookController::class, 'updateBook']);
