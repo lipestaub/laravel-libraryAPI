@@ -27,8 +27,8 @@ This API provides endpoints for accessing and manipulating library data, focusin
 1.  Clone the repository:
 
     ```bash
-    git clone [https://github.com/lipestaub/laravel-libraryAPI.git](https://github.com/lipestaub/library-api.git)
-    cd laravel-libraryAPI
+    git clone [https://github.com/lipestaub/library-api.git]
+    cd library-api
     ```
 
 2.  Install dependencies:
