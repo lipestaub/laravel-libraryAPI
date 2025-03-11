@@ -27,7 +27,7 @@ This API provides endpoints for accessing and manipulating library data, focusin
 1.  Clone the repository:
 
     ```bash
-    git clone [https://github.com/lipestaub/library-api.git]
+    git clone https://github.com/lipestaub/library-api.git
     cd library-api
     ```
 
